@@ -8,14 +8,15 @@ The reason for that was there was no consolidated document that would guide me t
 
 ## Topics
 
-1. **Lecture 1.**
+1. **[Lecture 1.](Lecture1/Lecture1.md)**
   	* Memory Layout of C program.
     	* ELF binaries.
   	* Overview of stack during function call.
   	* Assembly code for the function call and return.
   	* Concept of `$ebp` and `$esp`.
   	* Executable memory.
-1. **Lecture 2.**
+
+1. **[Lecture 2.](Lecture2/Lecture2.md)**
 	* What are stack overflows?
 	* **ASLR** (basics), avoiding **Stack protection**.
 	* Shellcodes
@@ -23,7 +24,7 @@ The reason for that was there was no consolidated document that would guide me t
 		*  Changing Control of the program to return to some other function
 		*  Shellcode injection in buffer and spawning the shell
 
-1. **Lecture 3.**
+1. **[Lecture 3.](Lecture3/Lecture3.md)**
 	* **Shellcode** injection with **ASLR** enabled.
 		* Environment variables.
 	* Return to Libc attacks.
