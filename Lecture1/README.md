@@ -131,3 +131,58 @@ Towards lower memory address.
 ![Stack Growth](stack.gif)  
 1. **esp**: As you can see in the abouve diagram the stack point or esp will keep on changing after each stack push operation. It is actually used to keep the pointer of the top of the stack.
 2. **ebp**: During runtime, variable are nothing as names. They are stored as the reference to the base of the stack frame. This base is pointed by the ebp register. Thats why when the fucntion calls another function the value of the ebp register is saved onto stack and the ebp register becomes available for storing the new stack frame.
+
+### Assembly language
+Its the language you can imagine that is just above the machine language. High level language such as C are first compiled to assembly language and then they are translated to machine language.  
+Lets take an example how the fucntion call code looks like.  
+`objdump -d ./function_call`
+```
+0804840b <foo>:
+ 804840b:	55                   	push   %ebp
+ 804840c:	89 e5                	mov    %esp,%ebp
+ 804840e:	83 ec 08             	sub    $0x8,%esp
+ 8048411:	83 ec 0c             	sub    $0xc,%esp
+ 8048414:	68 d0 84 04 08       	push   $0x80484d0
+ 8048419:	e8 c2 fe ff ff       	call   80482e0 <printf@plt>
+ 804841e:	83 c4 10             	add    $0x10,%esp
+ 8048421:	90                   	nop
+ 8048422:	c9                   	leave  
+ 8048423:	c3                   	ret    
+
+08048424 <main>:
+ 8048424:	8d 4c 24 04          	lea    0x4(%esp),%ecx
+ 8048428:	83 e4 f0             	and    $0xfffffff0,%esp
+ 804842b:	ff 71 fc             	pushl  -0x4(%ecx)
+ 804842e:	55                   	push   %ebp
+ 804842f:	89 e5                	mov    %esp,%ebp
+ 8048431:	51                   	push   %ecx
+ 8048432:	83 ec 04             	sub    $0x4,%esp
+ 8048435:	e8 d1 ff ff ff       	call   804840b <foo>
+ 804843a:	b8 00 00 00 00       	mov    $0x0,%eax
+ 804843f:	83 c4 04             	add    $0x4,%esp
+ 8048442:	59                   	pop    %ecx
+ 8048443:	5d                   	pop    %ebp
+ 8048444:	8d 61 fc             	lea    -0x4(%ecx),%esp
+ 8048447:	c3                   	ret    
+ 8048448:	66 90                	xchg   %ax,%ax
+ 804844a:	66 90                	xchg   %ax,%ax
+ 804844c:	66 90                	xchg   %ax,%ax
+ 804844e:	66 90                	xchg   %ax,%ax
+```
+I have oly copied the code of main and foo fucntion here. Observe the call to the foo fucntion from main.
+1. Main seems to push nothing before the fucntion call. That means foo does not takes any arguments.
+2. Call instruction will ask the CPU to save the return address(address next to instruction pointer) into the stack. This is done by the **call** intuction, so will not be visible in the code.
+3. The first instruction of **foo** is to push **$ebp** into the stack.
+4. The immidiate instruction will be to pint **$ebp** to point to **$esp**.  
+Those instruction can be divided into three parts, which are explained in the flow below.
+```
+      main                                                                foo
++-----------------+                                               +-----------------+
+|                 |                                               |                 |
+|1. ret val space |                                               |1. pushes ebp    |
+|2. arguments     | +------------->CALL Inst +------------------> |2. updates ebp   |
+|                 |                    +                          |                 |
+|                 |                    v                          |                 |
++-----------------+       Pushes the return address               +-----------------+
+
+```
