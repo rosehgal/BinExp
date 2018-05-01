@@ -6,6 +6,10 @@ The reason for that was there was no consolidated document that would guide me t
 > Also there are very few descriptive blogs/tutorials that had helped me exploiting a given binary. 
 > I have come up with consolidation of Modern exploitation techniques (in the form of tutorial) that will allow you to understand exploitation from scratch.
 
+I will be using [vagrant file](Vagrantfile) to setup the system on virtual box. To do  the same in your system follow:
+1. `vagrant up`
+2. `vagrant ssh`
+
 ## Topics
 
 1. **[Lecture 1.](Lecture1/README.md)**
