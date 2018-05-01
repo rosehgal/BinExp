@@ -124,3 +124,10 @@ normally. And this is how the stack looks like after function call is made.
                         |     unused space     |
                         +                      +
 ```
+### How stack grows:
+Now lets try to understand what are the use of `$ebp` and `$esp`.  
+
+Towards lower memory address.
+![Stack Growth](stack.gif)  
+1. **esp**: As you can see in the abouve diagram the stack point or esp will keep on changing after each stack push operation. It is actually used to keep the pointer of the top of the stack.
+2. **ebp**: During runtime, variable are nothing as names. They are stored as the reference to the base of the stack frame. This base is pointed by the ebp register. Thats why when the fucntion calls another function the value of the ebp register is saved onto stack and the ebp register becomes available for storing the new stack frame.
