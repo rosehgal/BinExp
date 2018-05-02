@@ -186,3 +186,45 @@ Those instruction can be divided into three parts, which are explained in the fl
 +-----------------+       Pushes the return address               +-----------------+
 
 ```
+
+### Assembly Language 2
+In the previous **Assembly language** section code, I mentioned how the code for
+simple function call looks like. In this section we will show, how the buffers
+look like in **asm** code.
+```c
+#include <stdio.h>
+void foo()
+{
+	char ch[10];
+	printf("Calling from fucntion");
+}
+
+int main()
+{
+	foo();
+	return 0;
+}
+```
+Corresponding foo function in assembly.
+```
+0804840b <foo>:
+ 804840b:	55                   	push   %ebp
+ 804840c:	89 e5                	mov    %esp,%ebp
+ 804840e:	83 ec 18             	sub    $0x18,%esp
+ 8048411:	83 ec 0c             	sub    $0xc,%esp
+ 8048414:	68 d0 84 04 08       	push   $0x80484d0
+ 8048419:	e8 c2 fe ff ff       	call   80482e0 <printf@plt>
+ 804841e:	83 c4 10             	add    $0x10,%esp
+ 8048421:	90                   	nop
+ 8048422:	c9                   	leave  
+ 8048423:	c3                   	ret  
+```  
+Notice, two sub calls.
+```
+804840e:	83 ec 18             	sub    $0x18,%esp
+8048411:	83 ec 0c             	sub    $0xc,%esp
+```
+For now we can ignore the first sub call, but second one is important. The
+second sub call from esp actually updates the stack to allocate the space for
+the **ch** buffer. Notice as I mentioned that names are nothing in **asm**. They
+are just reference from $esp or $ebp.
