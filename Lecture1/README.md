@@ -1,4 +1,6 @@
 # Lecture 1: Understanding Memories
+[Video Lecture Hindi](https://www.youtube.com/watch?v=cNtbqYgOQuk&t=8s)
+
 In this lecture I am going to cover:
 * **ELF** files, how do they look **inside the memory** (during runtime).
 * The organization of **Stack** during the function call.
