@@ -20,6 +20,10 @@ I will be using [vagrant file](Vagrantfile) to setup the system on virtual box. 
   	* Concept of `$ebp` and `$esp`.
   	* Executable memory.
 
+1. **[Lecture 1.5.](Lecture1.5/README.md)**
+    * How Linux finds the binaries utilis?
+    * Simple exploit using Linux $PATH variable.
+
 1. **[Lecture 2.](Lecture2/README.md)**
 	* What are stack overflows?
 	* **ASLR** (basics), avoiding **Stack protection**.
@@ -34,3 +38,13 @@ I will be using [vagrant file](Vagrantfile) to setup the system on virtual box. 
 	* Return to Libc attacks.
 		* Spawning `shell` in **non executable stack**
 		* Stack organization in case `ret2libc` has to return to some other function.
+
+1. **[Lecture 4.](Lecture4/)**
+    * This folder contains the set of questions to exploit binaries on the 
+    concept that we have learned so far.
+
+1. **[Lecture 5.](Lecture5/README.md)**
+    * What is format string Vulnerability?
+    * Seeing the content of stack.
+    * Writing onto the stack.
+    * Writing to arbitrary memory location.
