@@ -1,4 +1,5 @@
 # Exploiting Linux utils search.
+[Video Hindi](https://www.youtube.com/watch?v=VVFnA7yYFqE&t=42s)
 
 In Linux the file under the directory say `/bin/*` are nothing but binary
 executable that allows the user to do day to day tasks. All these binaries are
