@@ -49,3 +49,8 @@ I will be using [vagrant file](Vagrantfile) to setup the system on virtual box. 
     * Seeing the content of stack.
     * Writing onto the stack.
     * Writing to arbitrary memory location.
+
+1. **[Lecture 6.](Lecture5/README.md)**
+    * GOT
+    * Overriding GOT entry.
+    * Spawning shell with format string vuln.
