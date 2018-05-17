@@ -13,13 +13,13 @@ I will be using [vagrant file](Vagrantfile) to setup the system on virtual box. 
 
 ## Topics
 
-1. **[Lecture 1.](Lecture1/README.md)**
-  	* Memory Layout of C program.
-    	* ELF binaries.
-  	* Overview of stack during function call.
-  	* Assembly code for the function call and return.
-  	* Concept of `$ebp` and `$esp`.
-  	* Executable memory.
+1. **[Lecture 1.](Lecture1/README.md)**  
+     * Memory Layout of C program.
+     * ELF binaries.
+     * Overview of stack during function call.
+     * Assembly code for the function call and return.
+     * Concept of `$ebp` and `$esp`.
+     * Executable memory.
 
 1. **[Lecture 1.5.](Lecture1.5/README.md)**
     * How Linux finds the binaries utilis?
