@@ -1,7 +1,7 @@
 # Shellcode injection with ASLR
 
 In the previous [Lecture](../Lecture2/README.md) I talked about, injection of
-shell code when the ASLR was desabled. ASLR allows adds randomization of
+shell code when the ASLR was disabled. ASLR allows adds randomization of
 different segment address. So its not very trivial to identify the buffer address. The address of buffer keep on changing with every run of the program. So when the return address points to the buffer address (that keeps on changing), putting the executable shell code in memory is not so easy.  
 
 To disable ALSR,  
