@@ -1,5 +1,5 @@
 # Lecture 1: Understanding Memories
-[![PDF](https://img.shields.io/badge/PDF-gitprint-green.svg)](https://gitprint.com/r0hi7/BinExp/edit/master/Lecture1/README.md). 
+[![PDF](https://img.shields.io/badge/PDF-gitprint-green.svg)](https://gitprint.com/r0hi7/BinExp/master/Lecture1/README.md). 
 
 [Video Lecture Hindi](https://www.youtube.com/watch?v=cNtbqYgOQuk&t=8s)  
 
