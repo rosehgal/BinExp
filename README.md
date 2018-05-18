@@ -38,9 +38,9 @@ I will be using [vagrant file](Vagrantfile) to setup the system on virtual box. 
 		* Environment variables.
 
 1. **[Lecture 3.5](Lecture3.5/README.md)**
-        * Return to Libc attacks.
-		* Spawning `shell` in **non executable stack**
-		* Stack organization in case `ret2libc` attack.
+    * Return to Libc attacks.
+    * Spawning `shell` in **non executable stack**
+	* Stack organization in case `ret2libc` attack.
 
 1. **[Lecture 4.](Lecture4/)**
     * This folder contains the set of questions to exploit binaries on the concept that we have learned so far.
