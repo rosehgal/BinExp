@@ -1,5 +1,9 @@
 # Format String Vulnerability 2
 
+Please disable the following before going ahead:  
+1. ASLR : `echo "0" | sudo dd of=/proc/sys/kernel/randomize_va_space`. 
+2. Libc randomization : `ulimit -s unlimited`. 
+
 I will continue the concept of arbitrary memory writes that I covered in previous lecture. If you have not been through that session, please go through it before moving forward, [Lecture 5](../Lecture5/README.md).  
 
 In the previous Lecture we saw that how to perform arbitrary memory writes with format string vulnerability. And in this lecture we will see how to take benefits from those vulnerabilities and spawn the shell. Yes I am not joking, we can escalate these vulnerabilities to spawn the shell.
