@@ -36,13 +36,14 @@ I will be using [vagrant file](Vagrantfile) to setup the system on virtual box. 
 1. **[Lecture 3.](Lecture3/README.md)**
 	* **Shellcode** injection with **ASLR** enabled.
 		* Environment variables.
-	* Return to Libc attacks.
+
+1. **[Lecture 3.5](Lecture3.5/README.md)**
+        * Return to Libc attacks.
 		* Spawning `shell` in **non executable stack**
-		* Stack organization in case `ret2libc` has to return to some other function.
+		* Stack organization in case `ret2libc` attack.
 
 1. **[Lecture 4.](Lecture4/)**
-    * This folder contains the set of questions to exploit binaries on the 
-    concept that we have learned so far.
+    * This folder contains the set of questions to exploit binaries on the concept that we have learned so far.
 
 1. **[Lecture 5.](Lecture5/README.md)**
     * What is format string Vulnerability?
