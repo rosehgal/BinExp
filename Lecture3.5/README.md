@@ -23,15 +23,7 @@ As the name suggest this attack, overflows the buffer and by overflowing the buf
                         |                      | <---  padding done by compilers
                         +----------------------+
                         |    local variables   |
-                        |                      |
-                        |                      |
-                        |                      |
-                        |                      |
-                        +----------------------+
-                        |                      |
-                        |                      |
-                        |     unused space     |
-                        +                      +
+                        
 ```
 This is how the stack looks like in the when new function frame sets up and when the function will start returning from the this function then, it might look like this.  
 ```
@@ -50,15 +42,7 @@ Previous fn+---->  +----------------------+  +----------------------+
                    |                      |  |                      |
                    +----------------------+  |                      |
                    |    local variables   |  |                      |
-                   |                      |  |                      |
-                   |                      |  |                      |
-                   |                      |  |                      |
-                   |                      |  |                      |
-                   +----------------------+  |                      |
-                   |                      |  |                      |
-                   |                      |  |                      |
-                   |     unused space     |  |                      |
-                   +                      +  +                      +
+                  
 ```
 Since the control will not return to previous function but will go to some other function as default behaviour of `CALL` instruction. The call to new function will assume its begin called normally. And since we have already classified instruction before + CALL + after CALL as three different entities in previous lecture. We have to create the effect for the same in current stack.
 ```
@@ -92,16 +76,7 @@ And other instructions will taken care by the next function only, in its code. S
                 +----------------------+
                 |                      |
                 |                      |
-                |                      |
-                |                      |
-                |                      |
-                |                      |
-                |                      |
-                |                      |
-                |                      |
-                |                      |
-                |                      |
-                +                      +
+             
 ```
 When the control will go to the  next function, it will push `$ebp`. From the next functions perspective it has to look like this.
 ```
@@ -118,17 +93,7 @@ When the control will go to the  next function, it will push `$ebp`. From the ne
                 |                      ||       padding        |
                 +----------------------++----------------------+
                 |                      ||                      |
-                |                      ||                      |
-                |                      ||                      |
-                |                      ||                      |
-                |                      ||                      |
-                |                      ||                      |
-                |                      ||                      |
-                |                      ||                      |
-                |                      ||                      |
-                |                      ||                      |
-                |                      ||                      |
-                +                      ++                      +
+             
 ```
 Next function stack will look like this. Next function knows that on top of `$ebp` return address should be there so it will assume `argument previous function` as the `return address` for this function.
 ```
@@ -149,16 +114,7 @@ Next function stack will look like this. Next function knows that on top of `$eb
                 +----------------------+      +----------------------+
                 |                      |      |                      |
                 |                      |      |                      |
-                |                      |      |                      |
-                |                      |      |                      |
-                |                      |      |                      |
-                |                      |      |                      |
-                |                      |      |                      |
-                |                      |      |                      |
-                |                      |      |                      |
-                |                      |      |                      |
-                |                      |      |                      |
-                +                      +      +                      +
+
 ```
 In comparison of first and last diagram we see that the stack seems to be shifted by the 4 bytes.
 ```
@@ -178,17 +134,7 @@ In comparison of first and last diagram we see that the stack seems to be shifte
                 |     sa^ed $ebp       |       |       padding        |
                 +----------------------+       +----------------------+
                 |                      |       |                      |
-                +----------------------+       |                      |
-                |    local variables   |       |                      |
-                |                      |       |                      |
-                |                      |       |                      |
-                |                      |       |                      |
-                |                      |       |                      |
-                +----------------------+       |                      |
-                |                      |       |                      |
-                |                      |       |                      |
-                |     unused space     |       |                      |
-                +                      +       +                      +
+
 ```
 The buffer overflow has to override stack in such a way that to the next function the stack should look like the 2nd diagram.
 
