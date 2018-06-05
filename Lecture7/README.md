@@ -91,29 +91,27 @@ To understand, the physical heap (allocated to VA) is division-ed into arenas. T
 They are the collection of free memory allocation units called `chunks`. There are 4 different types of bins present in one arena specific to requirement. And each bin contains, allocation data structure that keeps track of free chunks. ** No arena (basically the bins in the arena) keeps track of allocated chunks **. Each arena have specific count of specific bin in it. 
 
 The four types of bins are:
-1. Fast
+1. **Fast**. 
     There are 10 fast bins. Each of these bins maintains a single linked list. Addition and deletion happen from the front of this list (LIFO manner). Each bin has chunks of the same size. The 10 bins each have chunks of sizes: 16, 24, 32, 40, 48, 56, 64 bytes etc. No two contiguous free fast chunks coalesce together.
 
-2. Unsorted
+2. **Unsorted**. 
     When small and large chunks are free'd they're initially stored in a this bin. There is only 1 unsorted bins. 
 
-3. Small
+3. **Small**. 
     The normal bins are divided into "small" bins, where each chunk is the same size, and "large" bins, where chunks are a range of sizes. When a chunk is added to these bins, they're first combined with adjacent chunks to "coalesce" them into larger chunks. Thus, these chunks are never adjacent to other such chunks (although they may be adjacent to fast or unsorted chunks, and of course in-use chunks). Small and large chunks are doubly-linked so that chunks may be removed from the middle (such as when they're combined with newly free'd chunks). 
 
-4. Large
+4. **Large**. 
     A chunk is "large" if its bin may contain more than one size. For small bins, you can pick the first chunk and just use it. For large bins, you have to find the "best" chunk, and possibly split it into two chunks (one the size you need, and one for the remainder).
 
 #### Chunks:
 Chunks are the fundamental allocation unit in bins. The memory in the heap is divided into chunks of various sizes depends on where they are allocated (in which bin). Each chunk includes meta-data about how big it is (via a size field in the chunk header), and thus where the adjacent chunks are. When the chunk is free'd, the memory that used to be application data is re-purposed for additional arena-related information, such as pointers within linked lists, such that suitable chunks can quickly be found and re-used when needed. The size of chunk is always in multiple of 8, that allows last three bits to be used as flags. 
 
 These three flags are:
-A (0x04)
+- **A**
     Allocated Arena - the main arena uses the application's heap. Other arenas use mmap'd heaps. To map a chunk to a heap, you need to know which case applies. If this bit is 0, the chunk comes from the main arena and the main heap. If this bit is 1, the chunk comes from mmap'd memory and the location of the heap can be computed from the chunk's address. 
-M (0x02)
-
-    MMap'd chunk - this chunk was allocated with a single call to mmap and is not part of a heap at all. 
-P (0x01)
-
+- **M**
+    MMap\'d chunk - this chunk was allocated with a single call to mmap and is not part of a heap at all. 
+- **P**
     Previous chunk is in use - if set, the previous chunk is still being used by the application, and thus the prev_size field is invalid. Note - some chunks, such as those in fastbins (see below) will have this bit set despite being free'd by the application. This bit really means that the previous chunk should not be considered a candidate for coalescing - it's "in use" by either the application or some other optimization layered atop malloc's original code :-)
 
 The chunk may look like the following:
@@ -178,7 +176,7 @@ int main()
 	printf("%p %p %p\n", a, b, c);
 	free(a);                                //fastbin head -> a > tail
 	//To avoid double free correction or fasttop check, free something other than a 
-    free(b);                                //fastbin head b -> a > tail
+	free(b);                                //fastbin head b -> a > tail
 	free(a);                                //fastbin head a -> b -> a > tail
 
 	d = malloc(32);                         //fastbin head -> b -> a -> tail first a popped
