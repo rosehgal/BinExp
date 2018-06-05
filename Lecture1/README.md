@@ -1,5 +1,7 @@
 # Lecture 1: Understanding Memories
-[Video Lecture Hindi](https://www.youtube.com/watch?v=cNtbqYgOQuk&t=8s)
+[![PDF](https://img.shields.io/badge/PDF-gitprint-green.svg)](https://gitprint.com/r0hi7/BinExp/master/Lecture1/README.md). 
+
+[Video Lecture Hindi](https://www.youtube.com/watch?v=cNtbqYgOQuk&t=8s)  
 
 In this lecture I am going to cover:
 * **ELF** files, how do they look **inside the memory** (during runtime).
