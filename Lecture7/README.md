@@ -117,7 +117,7 @@ These three flags are:
 The chunk may look like the following:
 ![chunk](./chunk.png)
 
-#### Allocation of small/medium bins:
+### Allocation of small/medium bins:
 `glibc` malloc uses first fit algorithm for the allocation of chunks in small/large bins. In this implementation as the name suggest, the first suitable free location of memeory which is capable of handing the new request size will split according to the requirement and will be allocated to the new request.
 Let see what's going on `use after free exploit`
 
@@ -158,7 +158,7 @@ int main()
 Run the program and notice that, the pointer `c` and pointer `a` points to the same location.
 With small and large chunks/bins there is a hope for use after free exploit. In which the pointer which is freed can be exploited even after it is freed.
 
-#### Fast bin allocation:
+### Fast bin allocation:
 As I told earlier that fatsbins are maintained as single linked list. When I mention maintains "fastbins are maintained" then I am talking about, the free chunks. **Always remember bins point to free chunks** only not to the allocated chunks. It is the responsiblity of programmmer to take care of allocated chunks and free then when they are not in use.
 When a chunk is freed, it added to the head of the fast bin list and when it is allocated the head node chunk is removed from the list and is up for allocation.
 If not properly maintained fastbins can be exploited to run `double free` exploits. In which programmer by mistake frees a memory twics and the attacker can leverage it to do something malicious.
