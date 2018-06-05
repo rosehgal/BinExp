@@ -55,3 +55,9 @@ I will be using [vagrant file](Vagrantfile) to setup the system on virtual box. 
     * GOT
     * Overriding GOT entry.
     * Spawning shell with format string vuln.
+
+1. **[Lecture 7.](Lecture7/README.md)**
+    * Heaps
+    * Arena, Bins, Chunks.
+    * Use after free exploit.
+    * Double free exploit.
