@@ -4,8 +4,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", inline: <<-SHELL
     dpkg --add-architecture i386
     cp /etc/apt/sources.list /etc/apt/sources.list.old
-    # mirror.0x.sg is currently down
-    # sed -i -e 's/archive\.ubuntu\.com/mirror\.0x\.sg/g' /etc/apt/sources.list
+
     apt-get update
     apt-get install -y wget libc6:i386 libncurses5:i386 libstdc++6:i386 gdb python python-pip libssl-dev gcc git binutils socat apt-transport-https ca-certificates libc6-dev-i386 python-capstone libffi-dev
     pip install --upgrade pip
@@ -14,7 +13,7 @@ Vagrant.configure("2") do |config|
     pip install ipython
     pip install ropper
 
-    # wget -q -O- https://github.com/hugsy/gef/raw/master/gef.sh | sh # old link
+
     wget -q -O- https://github.com/hugsy/gef/raw/master/scripts/gef.sh | sh
 
     git clone https://github.com/niklasb/libc-database.git /home/ubuntu/libc-database
