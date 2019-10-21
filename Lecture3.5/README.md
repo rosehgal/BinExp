@@ -5,7 +5,7 @@
     * Stack canaries **disabled**.
     * ASLR independent.
 
-As the name suggest this attack, overflows the buffer and by overflowing the buffer it changes the return address to the address of the function in shared library(`libc`). The main thing to learn in this attack exploitation is that you need to understand the how the stack has to be tickled in case the return instruction has to mimic the actual CALL instruction. And this would require you to understand how the stack is laid during function call and to understand this you can go through this [Lecture](../Lecture1/README.md).
+As the name suggests this attack, overflows the buffer and by overflowing the buffer it changes the return address to the address of the function in shared library(`libc`). The main thing to learn in this attack exploitation is that you need to understand the how the stack has to be tickled in case the return instruction has to mimic the actual CALL instruction. And this would require you to understand how the stack is laid during function call and to understand this you can go through this [Lecture](../Lecture1/README.md).
 
 ```
                         +   Previous function  |
@@ -23,11 +23,11 @@ As the name suggest this attack, overflows the buffer and by overflowing the buf
                         |                      | <---  padding done by compilers
                         +----------------------+
                         |    local variables   |
-                        
+
 ```
-This is how the stack looks like in the when new function frame sets up and when the function will start returning from the this function then, it might look like this.  
+This is how the stack looks like in the when new function frame sets up and when the function will start returning from this function then, it might look like this.
 ```
-                   +   Pre^ious function  +  +   Pre^ious function  + 
+                   +   Pre^ious function  +  +   Pre^ious function  +
                    |     Stack frame      |  |     Stack frame      |
                    |                      |  |                      |
 Previous fn+---->  +----------------------+  +----------------------+
@@ -42,7 +42,7 @@ Previous fn+---->  +----------------------+  +----------------------+
                    |                      |  |                      |
                    +----------------------+  |                      |
                    |    local variables   |  |                      |
-                  
+
 ```
 Since the control will not return to previous function but will go to some other function as default behaviour of `CALL` instruction. The call to new function will assume its begin called normally. And since we have already classified instruction before + CALL + after CALL as three different entities in previous lecture. We have to create the effect for the same in current stack.
 ```
@@ -76,9 +76,9 @@ And other instructions will taken care by the next function only, in its code. S
                 +----------------------+
                 |                      |
                 |                      |
-             
+
 ```
-When the control will go to the  next function, it will push `$ebp`. From the next functions perspective it has to look like this.
+When the control will go to the  next function, it will push `$ebp`. From the perspective of the next function it has to look like this.
 ```
                 +   Pre^ious function  ++   Pre^ious function  +
                 |     Stack frame      ||     Stack frame      |
@@ -93,7 +93,7 @@ When the control will go to the  next function, it will push `$ebp`. From the ne
                 |                      ||       padding        |
                 +----------------------++----------------------+
                 |                      ||                      |
-             
+
 ```
 Next function stack will look like this. Next function knows that on top of `$ebp` return address should be there so it will assume `argument previous function` as the `return address` for this function.
 ```
@@ -140,18 +140,17 @@ The buffer overflow has to override stack in such a way that to the next functio
 
 #### Executing Return 2 libc.
 
-The way the stack has to be overridden to call `system` will follow the same approach, in that case the `next` function that we were talking about so long will be `system`. In case of graceful exit of the program I will mark the return address of system with the call to `exit` :smile: Another `return2lib` from `system`.  
+The way the stack has to be overridden to call `system` will follow the same approach, in that case the `next` function that we were talking about so long will be `system`. In case of graceful exit of the program I will mark the return address of system with the call to `exit` :smile: Another `return2lib` from `system`.
 The exploit payload would look something like this:
 ``echo -e `python -c "import struct; print 'A'*108 + 'BBBB' + 'CCCC' + struct.pack('<I', <address of system>) + struct.pack('<I', <address of exit>) + <Address of argument to system>"` ``
 
-Next stuff is to find the address of `system`, `exit` and `argument to system`(which would be `"/bin/sh"`) to invoke the shell. We can find the address of `system` and `exit` using `GDB`. But how to get the address of string `"/bin/sh"`, which is not present even in the program.  
-Again environment variable can help us in the same as they are also pushed on the top of stack. Create one environment variable like:  
-`export SHELL="/bin/sh"`  
-Run GDB, and print the values of say 500 string entries from `$esp`.  
-`gef> x/100s $esp`  
+Next stuff is to find the address of `system`, `exit` and `argument to system`(which would be `"/bin/sh"`) to invoke the shell. We can find the address of `system` and `exit` using `GDB`. But how to get the address of string `"/bin/sh"`, which is not present even in the program.
+Again environment variables can help us in the same as they are also pushed on the top of stack. Create one environment variable like:
+`export SHELL="/bin/sh"`
+Run GDB, and print the values of say 500 string entries from `$esp`.
+`gef> x/100s $esp`
 And see where your string lies. Now we have all these address, fill the exploit template :cool: we did that as well.
 
 #### What we learnt?
-The stack will be shifted by one if we have to return from one function to mimic the call to another function. That's why extra 4 bytes of 'CCCC' is added in the exploit pay load.  
+The stack will be shifted by one if we have to return from one function to mimic the call to another function. That's why extra 4 bytes of 'CCCC' is added in the exploit pay load.
 Also this exploitation allows use bypass ASLR protection.
-
