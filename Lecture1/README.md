@@ -173,7 +173,7 @@ Lets take an example how the fucntion call code looks like.
  804844c:    66 90                    xchg   %ax,%ax
  804844e:    66 90                    xchg   %ax,%ax
 ```
-I have oly copied the code of main and foo fucntion here. Observe the call to the foo fucntion from main.
+I have only copied the code of main and foo fucntion here. Observe the call to the foo fucntion from main.
 1. Main seems to push nothing before the fucntion call. That means foo does not takes any arguments.
 2. Call instruction will ask the CPU to save the return address(address next to instruction pointer) into the stack. This is done by the **call** intuction, so will not be visible in the code.
 3. The first instruction of **foo** is to push **$ebp** into the stack.
