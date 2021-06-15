@@ -175,9 +175,9 @@ Lets take an example how the fucntion call code looks like.
 ```
 I have only copied the code of main and foo function here. Observe the call to the foo function from main.
 1. Main seems to push nothing before the fucntion call. That means foo does not takes any arguments.
-2. Call instruction will ask the CPU to save the return address(address next to instruction pointer) into the stack. This is done by the **call** intuction, so will not be visible in the code.
+2. Call instruction will ask the CPU to save the return address(address next to instruction pointer) into the stack. This is done by the **call** instruction, so will not be visible in the code.
 3. The first instruction of **foo** is to push **$ebp** into the stack.
-4. The immidiate instruction will be to pint **$ebp** to point to **$esp**.
+4. The immediate instruction will be to pint **$ebp** to point to **$esp**.
 Those instruction can be divided into three parts, which are explained in the flow below.
 
 ```
